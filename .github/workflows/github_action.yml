@@ -14,7 +14,6 @@ jobs:
       DNS: ${{ vars.DNS }}
       BLOCK: ${{ vars.BLOCK }}
       REDIRECT: ${{ vars.REDIRECT }}
-      REDIRECT_SECTION: ${{ vars.REDIRECT_SECTION || 'Google Gemini AI' }}
       EXCLUDE_REDIRECT: ${{ vars.EXCLUDE_REDIRECT }}
       DONOR_DNS: ${{ vars.DONOR_DNS }}
 
@@ -38,6 +37,8 @@ jobs:
         run: mvn -B clean package
 
       - name: Run application
+        env:
+          REDIRECT_SECTION: ${{ vars.REDIRECT_SECTION || 'Google Gemini AI' }}
         run: |
           echo "Starting application..."
           java --enable-preview -jar target/*.jar

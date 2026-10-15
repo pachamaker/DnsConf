@@ -51,6 +51,7 @@ class ListLoaderTest {
 
     @Test
     void loadsRoutesFromRespondingSource() throws IOException, InterruptedException {
+        doReturn(null).when(loader).selectedSection();
         doReturn(response(200, HOSTS_BODY, HOSTS_URL)).when(httpClient).send(any(), any());
 
         List<BypassRoute> routes = loader.fetchWebsites(List.of(HOSTS_URL));
@@ -105,6 +106,7 @@ class ListLoaderTest {
 
     @Test
     void retriesWhenSourceIsTemporarilyUnavailable() throws IOException, InterruptedException {
+        doReturn(null).when(loader).selectedSection();
         withoutRetryDelay();
         doReturn(response(429, "too many requests", HOSTS_URL),
                 response(503, "unavailable", HOSTS_URL),
